@@ -43,7 +43,7 @@ async def update_user(
         session: AsyncSession = Depends(get_async_session),
         current_user: UserSchema = Depends(authenticate_user)
 ):
-    stat = update(UserModel).values(**changed_user).where(UserModel.email == current_user.email)
+    stat = update(UserModel).values(**changed_user.model_dump()).where(UserModel.email == current_user.email)
     await session.execute(stat)
     await session.commit()
     return {'status': 'The user\'s data has been updated'}
