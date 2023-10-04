@@ -7,7 +7,7 @@ from datetime import datetime
 class UserSchema(BaseModel):
     first_name: str = Field(max_length=20)
     last_name: str = Field(max_length=20)
-    email: str = Field(pattern=r'^[A-Za-z.0-9_-]+@[A-Za-z0-9-]+\.[A-Za-z]+$')
+    email: str = Field(pattern=r'^[A-Za-z.0-9_-]+@[A-Za-z0-9-]+\.[A-Za-z]+$', examples=['youremail@gmail.com'])
     phone: str = Field(pattern=r'^\(380\)[0-9]{9}')
 
 

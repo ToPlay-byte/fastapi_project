@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import insert, select, update, delete
 from typing import Annotated
 from src.database import get_async_session
-from src.utils import authenticate_user, UserSchema
+from src import UserSchema, authenticate_user
 from .schemas import ProductSchema, UpdateProductSchema, CategorySchema
 from .models import ProductModel, Category
 
