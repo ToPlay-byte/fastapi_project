@@ -68,7 +68,7 @@ async def get_current_user(
         if token_data.exp.replace(tzinfo=pytz.utc) < datetime.utcnow().replace(tzinfo=pytz.utc):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail='Токен просроченный',
+                detail='Token has been expired',
                 headers={'WWW-Authenticate': 'Bearer'}
             )
     except (jwt.JWTError, ValidationException):
@@ -81,7 +81,7 @@ async def get_current_user(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Пользователя не найдено",
+            detail="Dont found the user",
         )
     return user
 
@@ -95,7 +95,7 @@ async def authenticate_staff(user: Annotated[UserModel, Depends(get_current_user
     if not user.is_staff:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail='У вас нет разрешения'
+            detail='You dont have the permission'
         )
     user_dict = {column.name: getattr(user, column.name) for column in user.__table__.columns}
     return UserSchema(**user_dict)
@@ -104,11 +104,11 @@ async def authenticate_staff(user: Annotated[UserModel, Depends(get_current_user
 async def send_email_for_verify(email: str, first_name: str, last_name: str) -> None:
     expired = datetime.utcnow() + timedelta(minutes=50)
     to_encode = {
-        'email': email, 'exp': expired
+        'email': email, 'exp': expired, 'purpose': 'verification'
     }
     token = jwt.encode(to_encode, JWT_SECRET_KEY, ALGORITHM)
     body = {'first_name': first_name, 'last_name': last_name, 'token': token}
-    await async_send_mail(f'Подтверждение электронной почты', email, body, 'verify.html')
+    await async_send_mail('Подтверждение электронной почты', email, body, 'verify.html')
 
 
 
