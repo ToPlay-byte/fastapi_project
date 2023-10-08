@@ -1,4 +1,3 @@
-
 from sqlalchemy.orm import declarative_base, mapped_column, Mapped
 from sqlalchemy import Text, String, ForeignKey
 

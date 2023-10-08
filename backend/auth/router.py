@@ -6,11 +6,12 @@ from sqlalchemy.exc import IntegrityError
 from pydantic import EmailStr
 from jose import jwt
 from typing import Annotated
-from src.database import get_async_session
+from backend.database import get_async_session
 from .config import JWT_SECRET_KEY, ALGORITHM
 from .utils import *
 from .schemas import UserCreateSchema, UserUpdateSchema
 from .models import UserModel
+
 
 router = APIRouter(
     prefix='/auth',
@@ -95,7 +96,7 @@ async def reset_password(email: Annotated[EmailStr, Form()], session: AsyncSessi
     if user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail='The user with email doesnt exist',
+            detail='The user with email doesnt exist+',
         )
     expired = datetime.utcnow() + timedelta(minutes=10)
     to_encode = {'email': email, 'exp': expired, 'purpose': 'reset_password'}
@@ -127,17 +128,6 @@ async def reset_password_confirm(
     await session.execute(stat)
     await session.commit()
     return {'status': 'The user\'s password has been changed'}
-
-
-
-
-
-
-
-
-
-
-
 
 
 

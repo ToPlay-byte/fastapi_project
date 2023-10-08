@@ -8,8 +8,8 @@ import pytz
 from jose import jwt
 from typing import Union, Any, Optional, Annotated
 from datetime import datetime, timedelta
-from src.database import get_async_session
-from src.utils import async_send_mail
+from backend.database import get_async_session
+from backend.utils import async_send_mail
 from .config import *
 from .schemas import TokenAccessData, UserSchema
 from .models import UserModel

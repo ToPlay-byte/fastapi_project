@@ -1,13 +1,17 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from src.products.router import router as products_router
-from .auth.router import router as users_router
+import sys
 
+
+sys.path.append("..")
+
+
+from backend.products.router import router as products_router
+from backend.auth.router import router as users_router
 
 
 origins = [
     '127.0.0.1:3000',
-    '127.0.0.1:40000'
 ]
 
 app = FastAPI()

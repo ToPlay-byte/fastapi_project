@@ -1,10 +1,9 @@
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
-
 import os
-from src.config import *
+from backend.config import *
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+BASE_DIR = os.path.dirname(__file__)
 
 config = ConnectionConfig(
     MAIL_USERNAME=MAIL_USERNAME,
@@ -15,7 +14,7 @@ config = ConnectionConfig(
     MAIL_FROM_NAME=MAIL_FROM_NAME,
     MAIL_STARTTLS=True,
     MAIL_SSL_TLS=False,
-    TEMPLATE_FOLDER=os.path.join(BASE_DIR, 'frontend/public/email')
+    TEMPLATE_FOLDER=os.path.join(BASE_DIR, 'email_templates')
 )
 
 

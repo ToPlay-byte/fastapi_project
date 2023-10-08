@@ -1,0 +1,62 @@
+version: "3.8"
+
+
+services:
+  db:
+    image: postgres:13.3
+    environment:
+      POSTGRES_USER: db_host
+      POSTGRES_PASSWORD: Doomdoom2002
+      POSTGRES_DB: db
+      PGDATA: data/postgres
+    ports:
+      - "127.0.0.1:5435:5432"
+    volumes:
+      - ./postgres_data:/data/postgres
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '127.0.0.1:6738:6739'
+    volumes:
+      - ./redis-data:/var/lib/redis
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    env_file:
+      - backend/.env
+    restart: always
+    command: bash -c "alembic upgrade head && uvicorn main:app --host 0.0.0.0 --port 8000"
+    volumes:
+      - ./backend:/backend
+    ports:
+      - "127.0.0.1:8000:8000"
+    expose:
+      - 8000
+    depends_on:
+      - db
+      - redis
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    restart: always
+    volumes:
+      - ./frontend:/frontend
+    ports:
+      - "127.0.0.1:3000:3000"
+    expose:
+      - 3000
+
+
+
+
+
+
+
+
+
+
+

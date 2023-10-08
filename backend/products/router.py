@@ -3,8 +3,8 @@ from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import insert, select, update, delete
 from typing import Annotated
-from src.database import get_async_session
-from src import UserSchema, authenticate_user
+from backend.database import get_async_session
+from backend import UserSchema, authenticate_user
 from .schemas import ProductSchema, UpdateProductSchema, CategorySchema
 from .models import ProductModel, Category
 
@@ -24,17 +24,18 @@ async def create_product(product: ProductSchema, session: AsyncSession = Depends
 
 
 @router.get('/get_list_products')
-async def get_list_products(session: AsyncSession = Depends(get_async_session), user: UserSchema = Depends(authenticate_user)):
+async def get_list_products(
+        session: AsyncSession = Depends(get_async_session),
+        user: UserSchema = Depends(authenticate_user)
+):
     stat = select(ProductModel)
     result = await session.execute(stat)
-    print(result)
     return result.scalars().all()
 
 
 @router.get('/get_product')
 async def get_product(product_name: str, session: AsyncSession = Depends(get_async_session)):
     stat = select(ProductModel).where(ProductModel.name == product_name)
-    print(stat)
     result = await session.execute(stat)
     return result.scalars().all()[0]
 
@@ -66,7 +67,7 @@ async def create_category(category: CategorySchema, session: AsyncSession = Depe
 
 
 @router.delete('/delete_category')
-async def create_category(category_name: str,  session: AsyncSession = Depends(get_async_session)):
+async def delete_category(category_name: str,  session: AsyncSession = Depends(get_async_session)):
     stat = delete(Category).where(Category.name == category_name)
     await session.execute(stat)
     await session.commit()
