@@ -1,5 +1,7 @@
-from dotenv import load_dotenv
 import os
+
+from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -8,4 +10,3 @@ REFRESH_TOKEN_EXPIRE_MINUTES = 60
 ALGORITHM = 'HS256'
 JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 JWT_REFRESH_SECRET_KEY = os.environ.get('JWT_REFRESH_SECRET_KEY')
-

@@ -1,5 +1,5 @@
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
-import os
+
 from backend.config import *
 
 
@@ -19,6 +19,7 @@ config = ConnectionConfig(
 
 
 async def async_send_mail(subject: str, email_to: str, body: dict, template: str):
+    """Send an email to a user"""
     message = MessageSchema(
         subject=subject,
         recipients=[email_to],

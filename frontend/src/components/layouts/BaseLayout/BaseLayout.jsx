@@ -15,12 +15,14 @@ const Layout = ({children}) => {
                             <input className={styles['header__search-input']} type="text" />
                             <button className={styles['header__search-btn']}><BiSearch /></button>
                         </form>
-                        <div className={styles["header__user"]}>
-                            <a href="/login" className={styles["header__user-link"]}>
-                                <BiSolidUser size={30}/>
-                                <p className={styles["header__user-text"]}>Войти</p>
-                            </a>
-                        </div>
+                        <ul className={styles['header__menu']}>
+                            <li className={styles["header__user"]}>
+                                <a href="/login" className={styles["header__user-link"]}>
+                                    <BiSolidUser size={30}/>
+                                    <p className={styles["header__user-text"]}>Войти</p>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </header>

@@ -1,14 +1,12 @@
-from fastapi import Depends
-from sqlalchemy import String, Boolean
+from sqlalchemy import String
 from sqlalchemy.orm import declarative_base, Mapped, mapped_column
-from sqlalchemy.ext.asyncio import AsyncSession
-from typing import AsyncGenerator
 
 
 Base = declarative_base()
 
 
 class UserModel(Base):
+    """A general user's model"""
     __tablename__ = 'user'
 
     id: Mapped[int] = mapped_column(primary_key=True)
